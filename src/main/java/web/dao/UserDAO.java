@@ -9,5 +9,5 @@ public interface UserDAO {
     void saveUser(User user);
     void deleteUser(Long id);
     User getUserById(Long id);
-    void reorderIds(); // Новый метод для обновления ID
+    void reorderIds();
 }

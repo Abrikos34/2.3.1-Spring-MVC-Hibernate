@@ -10,6 +10,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String handleException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
-        return "error"; // Убедитесь, что файл error.html существует в /WEB-INF/pages/
+        return "error";
     }
 }

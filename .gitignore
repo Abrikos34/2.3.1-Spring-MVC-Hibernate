@@ -1,67 +1,57 @@
-# IntelliJ IDEA specific files and folders
+# IntelliJ IDEA
 .idea/
-.idea/**/*
-!.idea/fileTemplates
+*.iml
 
-# Исключаем workspace и другие локальные файлы
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/vcs.xml
-.idea/httpRequests/
-.idea/dataSources/
-.idea/dataSources.local.xml
-.idea/shelf/
+# Build output
+/target/
+/out/
 
-# Editor-based HTTP Client requests
-/httpRequests/
+# Logs
+*.log
+/log/
+/logs/
 
-# OS generated files
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Operating System files
 .DS_Store
 Thumbs.db
 ehthumbs.db
+Desktop.ini
 
-# Logs and Temp files
-*.log
-*.tmp
-*.swp
+# Maven dependencies
+/.mvn/
+/mvnw
+/mvnw.cmd
+/settings.xml
 
-# Maven specific files
-.mvn/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
+# Test reports
+/test-output/
+/surefire-reports/
+/failsafe-reports/
 
-# Java specific
+# Database properties (если они содержат чувствительные данные)
+db.properties
+
+# Spring Boot Specific
+/application.properties
+/application.yml
+
+# Environment variables
+.env
+
+# Java class files
 *.class
+
+# JAR/WAR files
 *.jar
 *.war
-*.ear
 
-# Dependency caches
-/.gradle/
-.gradle/
-/node_modules/
-
-# IDE specific
-*.iml
-*.ipr
-*.iws
-
-# Build and target directories
-/target/
-
-# Exclude generated documentation
-/doc/
-
-# Exclude coverage reports
-/coverage/
-**/jacoco.exec
-**/test-results/
-
-# IntelliJ-specific build output
-/out/
-
-# Exclude compiled assets
-/dist/
+# Generated files
+hs_err_pid*
+rebel.xml
+rebel-remote.xml

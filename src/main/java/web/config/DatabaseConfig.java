@@ -16,7 +16,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:db.properties") // Загружаем db.properties файл
+@PropertySource("classpath:db.properties")
 public class DatabaseConfig {
 
     @Value("${hibernate.connection.url}")
@@ -58,8 +58,8 @@ public class DatabaseConfig {
         jpaProperties.put("hibernate.dialect", hibernateDialect);
         jpaProperties.put("hibernate.show_sql", hibernateShowSql);
         jpaProperties.put("hibernate.hbm2ddl.auto", hbm2ddlAuto);
-        jpaProperties.put("hibernate.format_sql", true); // Форматирование SQL-запросов
-        jpaProperties.put("hibernate.use_sql_comments", true); // Добавляет комментарии к SQL-запросам
+        jpaProperties.put("hibernate.format_sql", true);
+        jpaProperties.put("hibernate.use_sql_comments", true);
 
         factoryBean.setJpaProperties(jpaProperties);
         return factoryBean;

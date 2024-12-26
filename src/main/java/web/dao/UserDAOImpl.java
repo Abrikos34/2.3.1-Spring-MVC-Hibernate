@@ -53,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
             entityManager.createNativeQuery("INSERT INTO users (name, email, age, created_at) SELECT name, email, age, created_at FROM temp_users").executeUpdate();
             entityManager.createNativeQuery("DROP TABLE temp_users").executeUpdate();
             entityManager.createNativeQuery("ALTER TABLE users AUTO_INCREMENT = 1").executeUpdate();
-            entityManager.clear(); // Очистка кэша EntityManager
+            entityManager.clear();
             System.out.println("✅ IDs успешно перенумерованы и автоинкремент сброшен.");
         } catch (Exception e) {
             System.err.println("❌ Ошибка при сбросе ID: " + e.getMessage());
