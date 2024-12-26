@@ -1,0 +1,67 @@
+# IntelliJ IDEA specific files and folders
+.idea/
+.idea/**/*
+!.idea/fileTemplates
+
+# Исключаем workspace и другие локальные файлы
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/vcs.xml
+.idea/httpRequests/
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/shelf/
+
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Logs and Temp files
+*.log
+*.tmp
+*.swp
+
+# Maven specific files
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Java specific
+*.class
+*.jar
+*.war
+*.ear
+
+# Dependency caches
+/.gradle/
+.gradle/
+/node_modules/
+
+# IDE specific
+*.iml
+*.ipr
+*.iws
+
+# Build and target directories
+/target/
+
+# Exclude generated documentation
+/doc/
+
+# Exclude coverage reports
+/coverage/
+**/jacoco.exec
+**/test-results/
+
+# IntelliJ-specific build output
+/out/
+
+# Exclude compiled assets
+/dist/
