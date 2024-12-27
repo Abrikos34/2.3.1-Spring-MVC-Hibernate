@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String homeRedirect() {
+    public String redirectToUserList() {
         return "redirect:/users";
     }
 }

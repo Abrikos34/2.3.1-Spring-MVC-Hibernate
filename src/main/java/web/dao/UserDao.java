@@ -4,7 +4,7 @@ import web.model.User;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface UserDao {
     List<User> getAllUsers();
     void saveUser(User user);
     void deleteUser(Long id);

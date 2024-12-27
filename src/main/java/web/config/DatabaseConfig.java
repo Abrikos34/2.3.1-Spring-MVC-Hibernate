@@ -1,9 +1,9 @@
 package web.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -19,31 +19,19 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 public class DatabaseConfig {
 
-    @Value("${hibernate.connection.url}")
-    private String dbUrl;
+    private final Environment env;
 
-    @Value("${hibernate.connection.username}")
-    private String dbUsername;
-
-    @Value("${hibernate.connection.password}")
-    private String dbPassword;
-
-    @Value("${hibernate.dialect}")
-    private String hibernateDialect;
-
-    @Value("${hibernate.show_sql}")
-    private boolean hibernateShowSql;
-
-    @Value("${hibernate.hbm2ddl.auto}")
-    private String hbm2ddlAuto;
+    public DatabaseConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(dbUsername);
-        dataSource.setPassword(dbPassword);
+        dataSource.setUrl(env.getProperty("hibernate.connection.url"));
+        dataSource.setUsername(env.getProperty("hibernate.connection.username"));
+        dataSource.setPassword(env.getProperty("hibernate.connection.password"));
         return dataSource;
     }
 
@@ -55,9 +43,9 @@ public class DatabaseConfig {
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.dialect", hibernateDialect);
-        jpaProperties.put("hibernate.show_sql", hibernateShowSql);
-        jpaProperties.put("hibernate.hbm2ddl.auto", hbm2ddlAuto);
+        jpaProperties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        jpaProperties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         jpaProperties.put("hibernate.format_sql", true);
         jpaProperties.put("hibernate.use_sql_comments", true);
 

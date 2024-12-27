@@ -9,7 +9,7 @@ import web.model.User;
 import java.util.List;
 
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -35,6 +35,10 @@ public class UserDAOImpl implements UserDAO {
         User user = entityManager.find(User.class, id);
         if (user != null) {
             entityManager.remove(user);
+            System.out.println("✅ Пользователь с ID " + id + " успешно удалён из базы данных.");
+        } else {
+            System.err.println("❌ Пользователь с ID " + id + " не найден.");
+            throw new IllegalArgumentException("Пользователь с таким ID не существует.");
         }
     }
 
@@ -60,6 +64,4 @@ public class UserDAOImpl implements UserDAO {
             throw new RuntimeException("Ошибка при сбросе ID", e);
         }
     }
-
-
 }
