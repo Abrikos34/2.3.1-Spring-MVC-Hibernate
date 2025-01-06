@@ -12,39 +12,39 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDAO;
+    private final UserDao userDao;
 
     @Autowired
-    public UserServiceImpl(UserDao userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userDao.getAllUsers();
     }
 
     @Override
     @Transactional
     public void saveUser(User user) {
         try {
-            userDAO.saveUser(user);
+            userDao.saveUser(user);
         } catch (DataIntegrityViolationException e) {
-            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                org.hibernate.exception.ConstraintViolationException constraintEx =
-                        (org.hibernate.exception.ConstraintViolationException) e.getCause();
-
-                if ("users.email".equals(constraintEx.getConstraintName())) {
-                    throw new RuntimeException("Ошибка: Пользователь с таким email уже существует!");
-                }
-            }
-            throw new RuntimeException("Ошибка целостности данных при сохранении пользователя", e);
+            handleDataIntegrityViolation(e);
         } catch (Exception e) {
-            throw new RuntimeException("Неизвестная ошибка при сохранении пользователя", e);
+            throw new RuntimeException("Ошибка при сохранении пользователя", e);
         }
     }
 
-
+    private void handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        Throwable cause = e.getCause();
+        if (cause instanceof org.hibernate.exception.ConstraintViolationException constraintEx) {
+            if ("users.email".equals(constraintEx.getConstraintName())) {
+                throw new RuntimeException("Ошибка: Пользователь с таким email уже существует!");
+            }
+        }
+        throw new RuntimeException("Ошибка целостности данных при сохранении пользователя", e);
+    }
 
     @Override
     @Transactional
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("ID пользователя не может быть null.");
         }
         try {
-            userDAO.deleteUser(id);
+            userDao.deleteUser(id);
             System.out.println("✅ Пользователь с ID " + id + " успешно удалён.");
         } catch (IllegalArgumentException e) {
             System.err.println("❌ Некорректный ID пользователя: " + e.getMessage());
@@ -64,25 +64,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     @Override
     public User getUserById(Long id) {
         try {
-            return userDAO.getUserById(id);
+            return userDao.getUserById(id);
         } catch (Exception e) {
             throw new RuntimeException("Ошибка при получении пользователя с ID: " + id, e);
-        }
-    }
-
-    @Override
-    @Transactional
-    public void reorderIds() {
-        try {
-            userDAO.reorderIds();
-            System.out.println("✅ IDs успешно перенумерованы через сервис.");
-        } catch (Exception e) {
-            System.err.println("❌ Ошибка при перенумерации ID в сервисе: " + e.getMessage());
-            throw new RuntimeException("Ошибка при перенумерации ID в сервисе", e);
         }
     }
 }

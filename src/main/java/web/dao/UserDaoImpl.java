@@ -46,22 +46,4 @@ public class UserDaoImpl implements UserDao {
     public User getUserById(Long id) {
         return entityManager.find(User.class, id);
     }
-
-
-    @Override
-    @Transactional
-    public void reorderIds() {
-        try {
-            entityManager.createNativeQuery("CREATE TABLE temp_users AS SELECT * FROM users ORDER BY id").executeUpdate();
-            entityManager.createNativeQuery("TRUNCATE TABLE users").executeUpdate();
-            entityManager.createNativeQuery("INSERT INTO users (name, email, age, created_at) SELECT name, email, age, created_at FROM temp_users").executeUpdate();
-            entityManager.createNativeQuery("DROP TABLE temp_users").executeUpdate();
-            entityManager.createNativeQuery("ALTER TABLE users AUTO_INCREMENT = 1").executeUpdate();
-            entityManager.clear();
-            System.out.println("✅ IDs успешно перенумерованы и автоинкремент сброшен.");
-        } catch (Exception e) {
-            System.err.println("❌ Ошибка при сбросе ID: " + e.getMessage());
-            throw new RuntimeException("Ошибка при сбросе ID", e);
-        }
-    }
 }
